@@ -4,6 +4,9 @@ import Blockchain from "./models/Blockchain.mjs";
 import blockRouter from "./routes/block-routes.mjs";
 import blockchainRouter from "./routes/blockchain-routes.mjs";
 import PubNubServer from "./pubnubServer.mjs";
+import TransactionPool from "./models/TransactionPool.mjs";
+import Wallet from "./models/Wallet.mjs";
+import transactionRouter from "./routes/transaction-routes.mjs";
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -15,8 +18,12 @@ const credentials = {
 };
 
 export const blockchain = new Blockchain();
+export const transactionPool = new TransactionPool();
+export const wallet = new Wallet();
 export const pubnubServer = new PubNubServer({
   blockchain: blockchain,
+  transactionPool: transactionPool,
+  wallet: wallet,
   credentials: credentials,
 });
 
@@ -34,6 +41,7 @@ setTimeout(() => {
 
 app.use("/api/v1/blockchain", blockchainRouter);
 app.use("/api/v1/block", blockRouter);
+app.use("/api/v1/wallet", transactionRouter);
 
 const synchronizeChain = async () => {
   const response = await fetch(`${ROOT_NODE}/api/v1/blockchain`);

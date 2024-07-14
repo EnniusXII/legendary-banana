@@ -8,6 +8,32 @@ export default class Transaction {
     this.inputMap = this.createInputMap({sender, outputMap: this.outputMap});
   };
 
+  static validate(transaction) {
+    const {inputMap: {address, amount, signature}, outputMap} = transaction;
+
+    const outputTotal = Object.values(outputMap).reduce(
+      (total, amount) => total + amount
+    );
+
+    if (amount !== outputTotal) return false;
+
+    if (!verifySignature({publicKey: address, data: outputMap, signature}))
+      return false;
+
+    return true;
+  };
+
+  update({sender, recipient, amount}) {
+    if (amount > this.outputMap[sender.publicKey])
+      throw new Error("Amount exceeds your current balance!");
+
+    this.outputMap[recipient] = amount;
+
+    this.outputMap[sender.publicKey] = this.outputMap[sender.publicKey] - amount;
+
+    this.input = this.createInputMap({sender, outputMap: this.outputMap});
+  };
+
   createOutputMap({sender, recipient, amount}) {
     const outputMap = {};
 
@@ -22,22 +48,7 @@ export default class Transaction {
       timestamp: Date.now(),
       amount: sender.balance,
       address: sender.publicKey,
-      signature: sender.sign(outputMap),
+      signature: sender.sign(outputMap)
     };
-  };
-
-  static validate(transaction) {
-    const {inputMap: {address, amount, signature}, outputMap} = transaction;
-
-    const outputTotal = Object.values(outputMap).reduce(
-      (total, amount) => total + amount
-    );
-
-    if (amount !== outputTotal) return false;
-
-    if (!verifySignature({publicKey: address, data: outputMap, signature}))
-      return false;
-
-    return true;
   };
 }
