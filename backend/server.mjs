@@ -44,12 +44,17 @@ app.use("/api/v1/block", blockRouter);
 app.use("/api/v1/wallet", transactionRouter);
 
 const synchronizeChain = async () => {
-  const response = await fetch(`${ROOT_NODE}/api/v1/blockchain`);
+  let response = await fetch(`${ROOT_NODE}/api/v1/blockchain`);
   if (response.ok) {
     const result = await response.json();
-    console.log("SYNC", result.data);
     blockchain.replaceChain(result.data);
-  }
+  };
+
+  response = await fetch(`${ROOT_NODE}/api/v1/wallet/transactions`);
+  if (response.ok) {
+    const result = await response.json();
+    transactionPool.replaceTransactionMap(result.data);
+  };
 };
 
 if (process.env.GENERATE_NODE_PORT === "true") {

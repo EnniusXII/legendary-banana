@@ -1,11 +1,19 @@
 import { v4 as uuidv4 } from "uuid";
 import { verifySignature } from "../utilities/crypto-lib.mjs";
+import { REWARD_ADDRESS, MINING_REWARD } from "../config/settings.mjs";
 
 export default class Transaction {
-  constructor({sender, recipient, amount}) {
+  constructor({sender, recipient, amount, inputMap, outputMap}) {
     this.id = uuidv4().replaceAll("-", "");
-    this.outputMap = this.createOutputMap({sender, recipient, amount});
-    this.inputMap = this.createInputMap({sender, outputMap: this.outputMap});
+    this.outputMap = outputMap || this.createOutputMap({sender, recipient, amount});
+    this.inputMap = inputMap || this.createInputMap({sender, outputMap: this.outputMap});
+  };
+
+  static transactionReward({miner}) {
+    return new this({
+      inputMap: REWARD_ADDRESS,
+      outputMap: {[miner.publicKey]: MINING_REWARD},
+    });
   };
 
   static validate(transaction) {
@@ -27,11 +35,15 @@ export default class Transaction {
     if (amount > this.outputMap[sender.publicKey])
       throw new Error("Amount exceeds your current balance!");
 
-    this.outputMap[recipient] = amount;
+      if (!this.outputMap[recipient]) {
+        this.outputMap[recipient] = amount;
+      } else {
+        this.outputMap[recipient] = this.outputMap[recipient] + amount;
+      }
 
     this.outputMap[sender.publicKey] = this.outputMap[sender.publicKey] - amount;
 
-    this.input = this.createInputMap({sender, outputMap: this.outputMap});
+    this.inputMap = this.createInputMap({sender, outputMap: this.outputMap});
   };
 
   createOutputMap({sender, recipient, amount}) {

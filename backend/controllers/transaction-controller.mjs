@@ -1,6 +1,8 @@
 import { transactionPool } from "../server.mjs";
 import { wallet } from "../server.mjs";
 import { pubnubServer } from "../server.mjs";
+import Miner from "../models/Miner.mjs";
+import { blockchain } from "../server.mjs";
 
 export const addTransaction = (req, res, next) => {
   const {amount, recipient} = req.body;
@@ -27,4 +29,17 @@ export const addTransaction = (req, res, next) => {
 
 export const getTransactionPool = (req, res, next) => {
   res.status(200).json({success: true, statusCode: 200, data: transactionPool.transactionMap});
+};
+
+export const mineTransactions = (req, res, next) => {
+  const miner = new Miner({
+    blockchain,
+    transactionPool,
+    wallet,
+    pubsub: pubnubServer,
+  });
+
+  miner.mineTransaction();
+
+  res.status(200).json({success: true, statusCode: 200, data: 'Block has been mined'});
 };
