@@ -3,6 +3,7 @@ import { wallet } from "../server.mjs";
 import { pubnubServer } from "../server.mjs";
 import Miner from "../models/Miner.mjs";
 import { blockchain } from "../server.mjs";
+import Wallet from "../models/Wallet.mjs";
 
 export const addTransaction = (req, res, next) => {
   const {amount, recipient} = req.body;
@@ -42,4 +43,11 @@ export const mineTransactions = (req, res, next) => {
   miner.mineTransaction();
 
   res.status(200).json({success: true, statusCode: 200, data: 'Block has been mined'});
+};
+
+export const getWalletBalance = (req, res, next) => {
+  const address = wallet.publicKey;
+  const balance = Wallet.calculateBalance({chain: blockchain, address});
+
+  res.status(200).json({success: true, statusCode: 200, data: {address: address, balance: balance}});
 };
