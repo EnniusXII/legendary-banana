@@ -13,7 +13,11 @@ export default class Wallet {
         return this.keyPair.sign(createHash(data));
     };
 
-    createTransaction({recipient, amount}) {
+    createTransaction({recipient, amount, chain}) {
+        if (chain) {
+            this.balance = Wallet.calculateBalance({chain, address: this.publicKey});
+        };
+
         if (amount > this.balance) throw new Error("Amount exceeds your current balance!");
     
         return new Transaction({sender: this, recipient, amount});
