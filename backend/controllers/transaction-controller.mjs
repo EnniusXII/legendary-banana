@@ -47,7 +47,7 @@ export const mineTransactions = (req, res, next) => {
 
 export const getWalletBalance = (req, res, next) => {
   const address = wallet.publicKey;
-  const balance = Wallet.calculateBalance({chain: blockchain, address});
+  const balance = Wallet.calculateBalance({chain: blockchain.chain, address});
 
   res.status(200).json({success: true, statusCode: 200, data: {address: address, balance: balance}});
 };
