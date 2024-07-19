@@ -8,6 +8,8 @@ import TransactionPool from "./models/TransactionPool.mjs";
 import Wallet from "./models/Wallet.mjs";
 import transactionRouter from "./routes/transaction-routes.mjs";
 import { connectDb } from "./config/mongoDb.mjs";
+import authRouter from "./routes/auth-routes.mjs"
+import { errorHandler } from "./middleware/errorHandler.mjs";
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -45,6 +47,9 @@ setTimeout(() => {
 app.use("/api/v1/blockchain", blockchainRouter);
 app.use("/api/v1/block", blockRouter);
 app.use("/api/v1/wallet", transactionRouter);
+app.use("/api/v1/auth", authRouter);
+
+app.use(errorHandler);
 
 const synchronizeChain = async () => {
   let response = await fetch(`${ROOT_NODE}/api/v1/blockchain`);
@@ -66,7 +71,7 @@ if (process.env.GENERATE_NODE_PORT === "true") {
 
 const PORT = NODE_PORT || DEFAULT_PORT;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 
   if (PORT !== DEFAULT_PORT) {
