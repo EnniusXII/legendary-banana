@@ -14,14 +14,14 @@ export const protect = asyncHandler(async (req, res, next) => {
   }
 
   if (!token) {
-    next(new ErrorResponse("Not authorized", 401));
+    next(new ErrorResponse("Not authorized, you need to log in!", 401));
   }
 
   const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
   req.user = await User.findById(decodedToken.id);
 
   if (!req.user) {
-    next(new ErrorResponse("Not authorized", 401));
+    next(new ErrorResponse("Not authorized, you need to log in!", 401));
   }
 
   next();
@@ -33,7 +33,7 @@ export const authorize = (...roles) => {
       return res.status(403).json({
         success: false,
         statusCode: 403,
-        message: `Role ${req.user.role} is not authorized`,
+        message: `Role '${req.user.role}' is not authorized`,
       });
     }
     next();
