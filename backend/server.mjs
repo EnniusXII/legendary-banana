@@ -73,3 +73,8 @@ app.listen(PORT, () => {
     synchronizeChain();
   }
 });
+
+process.on("unhandledRejection", (err, promise) => {
+  console.log(`Error: ${err.message}`);
+  server.close(() => process.exit(1));
+});
