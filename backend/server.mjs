@@ -7,8 +7,11 @@ import PubNubServer from "./pubnubServer.mjs";
 import TransactionPool from "./models/TransactionPool.mjs";
 import Wallet from "./models/Wallet.mjs";
 import transactionRouter from "./routes/transaction-routes.mjs";
+import { connectDb } from "./config/mongoDb.mjs";
 
 dotenv.config({ path: "./config/config.env" });
+
+connectDb();
 
 const credentials = {
   publishKey: process.env.PUBLISH_KEY,
