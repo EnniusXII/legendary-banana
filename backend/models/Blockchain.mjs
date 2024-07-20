@@ -2,6 +2,7 @@ import Block from "./Block.mjs";
 import { createHash } from "../utilities/crypto-lib.mjs";
 import { MINING_REWARD, REWARD_ADDRESS } from "../config/settings.mjs";
 import Transaction from "./Transaction.mjs";
+import BlockchainDb from "./BlockchainSchema.mjs";
 
 export default class Blockchain {
   constructor() {
@@ -15,6 +16,8 @@ export default class Blockchain {
     });
 
     this.chain.push(newBlock);
+    BlockchainDb.create({chain: this.chain})
+
     return newBlock;
   };
 
