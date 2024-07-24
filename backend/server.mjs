@@ -11,6 +11,7 @@ import { connectDb } from "./config/mongoDb.mjs";
 import authRouter from "./routes/auth-routes.mjs"
 import { errorHandler } from "./middleware/errorHandler.mjs";
 import cors from "cors";
+import { securityHandler } from "./middleware/securityHandler.mjs";
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -37,6 +38,15 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+securityHandler(app);
+
+app.use("/api/v1/blockchain", blockchainRouter);
+app.use("/api/v1/block", blockRouter);
+app.use("/api/v1/wallet", transactionRouter);
+app.use("/api/v1/auth", authRouter);
+
+app.use(errorHandler);
+
 const DEFAULT_PORT = 5001;
 const ROOT_NODE = `http://localhost:${DEFAULT_PORT}`;
 
@@ -45,13 +55,6 @@ let NODE_PORT;
 setTimeout(() => {
   pubnubServer.broadcast();
 }, 1000);
-
-app.use("/api/v1/blockchain", blockchainRouter);
-app.use("/api/v1/block", blockRouter);
-app.use("/api/v1/wallet", transactionRouter);
-app.use("/api/v1/auth", authRouter);
-
-app.use(errorHandler);
 
 const synchronizeChain = async () => {
   let response = await fetch(`${ROOT_NODE}/api/v1/blockchain`);
