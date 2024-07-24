@@ -10,6 +10,7 @@ import transactionRouter from "./routes/transaction-routes.mjs";
 import { connectDb } from "./config/mongoDb.mjs";
 import authRouter from "./routes/auth-routes.mjs"
 import { errorHandler } from "./middleware/errorHandler.mjs";
+import cors from "cors";
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -34,6 +35,7 @@ export const pubnubServer = new PubNubServer({
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const DEFAULT_PORT = 5001;
 const ROOT_NODE = `http://localhost:${DEFAULT_PORT}`;

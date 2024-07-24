@@ -1,9 +1,11 @@
-import Header from "../components/Header";
+import Wallet from "../components/Wallet";
+
 
 function Home() {
     return (
-      <div className="wrapper">
-        <Header />
+      <div>
+        Legendary Banana
+        <Wallet />
       </div>
     );
   }
