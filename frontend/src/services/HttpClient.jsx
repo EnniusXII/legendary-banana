@@ -23,3 +23,51 @@ export const getBalance = async () => {
       console.log(error);
     }
 };
+
+export const sendTransaction = async (recipient, amount) => {
+  const transactionData = {recipient, amount};
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    window.alert("You need to log in to send a transaction.");
+  }
+
+  try {
+    const response = await axios.post(
+      "http://localhost:5001/api/v1/wallet/transaction",
+      transactionData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error sending transaction:", error);
+  }
+};
+
+export const mineBlock = async () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    window.alert("You need to log in to mine a block.");
+  }
+
+  try {
+    const response = await axios.get(
+      "http://localhost:5001/api/v1/wallet/mine",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error mining block:", error);
+  }
+};

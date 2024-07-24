@@ -2,6 +2,7 @@ import { Layout } from "./pages/Layout";
 import Home from "./pages/Home";
 import { Login } from "./pages/Login"
 import { createBrowserRouter } from "react-router-dom";
+import { SendTransactionPage } from "./pages/SendTransactionPage";
 
 export const bananaRouter = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ export const bananaRouter = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/sendtransaction",
+        element: <SendTransactionPage />,
       },
     ],
   },

@@ -13,6 +13,9 @@ export const Layout = () => {
               <li>
                 <NavLink to={"/login"}>Login</NavLink>
               </li>
+              <li>
+                <NavLink to={"/sendtransaction"}>Send</NavLink>
+              </li>
             </ul>
           </nav>
         </header>
