@@ -12,10 +12,96 @@ body {
   background: #000;
 }
 
-.header {
-  text-align: center;
+main {
+  max-width: 800px;
+  margin: 3rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  h1 {
-    color: yellow;
-  }
+.home-wrapper {
+  text-align: center;
+  color: #c7c724;
+}
+
+.wallet-info {
+  max-width: 800px;
+  border: solid 1px #fff;
+  padding: 1rem;
+  margin: 2rem 0;
+}
+
+.wallet-info div {
+  word-wrap: break-word;
+}
+
+.blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.block {
+  border: solid 1px #fff;
+  padding: 1rem;
+  background: #333;
+  word-wrap: break-word;
+}
+
+.transaction-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: rgb(122, 0, 0);
+  color: rgb(248, 213, 148);
+  border: solid 1px #fff;
+  outline: none;
+  cursor: pointer;
+}
+
+.sendForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 173px;
+  margin-top: 20px;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 173px;
+  margin-top: 20px;
+}
+
+.navHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-ul {
+  display: flex;
+  gap: 10px;
+  list-style-type: none;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  gap: 10px;
 }

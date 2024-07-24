@@ -30,6 +30,7 @@ export const sendTransaction = async (recipient, amount) => {
 
   if (!token) {
     window.alert("You need to log in to send a transaction.");
+    return Promise.reject("No token available");
   }
 
   try {

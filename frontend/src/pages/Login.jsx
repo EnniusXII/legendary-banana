@@ -21,7 +21,7 @@ export const Login = () => {
   return (
     <div className="login-wrapper">
       <h1>Log in</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="loginForm" onSubmit={handleSubmit}>
           <label>Email: </label>
           <input
             type="text"
