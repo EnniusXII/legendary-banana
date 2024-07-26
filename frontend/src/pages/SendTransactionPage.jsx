@@ -24,6 +24,7 @@ export const SendTransactionPage = () => {
         await mineBlock();
 
         window.alert("Block mined successfully and added to the blockchain.");
+        window.location.href = "/blocks";
       } catch (error) {
         console.error("Error mining transactions:", error);
       }
