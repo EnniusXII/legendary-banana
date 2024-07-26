@@ -43,10 +43,12 @@ export default class Block {
   };
 
   static adjustDifficultyLevel({block, timestamp}) {
-    const {difficulty} = block;
+    let {difficulty} = block;
 
-    if (timestamp - block.timestamp > MINE_RATE) return difficulty - 1;
+    if (difficulty < 1) return 1;
 
-    return difficulty + 1;
+    return timestamp - block.timestamp > MINE_RATE
+      ? +difficulty + 1
+      : +difficulty - 1;
   };
 }
