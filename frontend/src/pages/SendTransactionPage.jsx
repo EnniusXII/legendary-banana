@@ -8,11 +8,14 @@ export const SendTransactionPage = () => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        await sendTransaction(recipient, amount);
+        const response = await sendTransaction(recipient, amount);
+        console.log(response);
 
-        window.alert("Successfully added transaction. Please mine the block to confirm");
-        setRecipient("");
-        setAmount("");
+        if (response.success) {
+          window.alert("Successfully added transaction. Please mine the block to confirm");
+          setRecipient("");
+          setAmount("");
+        }
       } catch (error) {
         console.error(error);
         window.alert("Transaction failed. Please try again.");
