@@ -36,7 +36,7 @@ export const SendTransactionPage = () => {
     return (
       <div className="sendTransactionWrapper">
         <h1>Send a Transaction</h1>
-        <form className="sendForm" onSubmit={handleSubmit}>
+        <form className="forms" onSubmit={handleSubmit}>
             <label>Recipient:</label>
             <input
               type="text"

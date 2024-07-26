@@ -72,3 +72,14 @@ export const mineBlock = async () => {
     console.error("Error mining block:", error);
   }
 };
+
+export const signUp = async (name, email, password) => {
+  const signUpData = {name, email, password};
+
+  const response = await axios.post(
+    'http://localhost:5001/api/v1/auth/register',
+    signUpData
+  );
+
+  return response.data;
+};

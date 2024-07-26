@@ -11,6 +11,9 @@ export const Layout = () => {
                 <NavLink to={"/"}>Home</NavLink>
               </li>
               <li>
+                <NavLink to={"/signup"}>Sign Up</NavLink>
+              </li>
+              <li>
                 <NavLink to={"/login"}>Login</NavLink>
               </li>
               <li>

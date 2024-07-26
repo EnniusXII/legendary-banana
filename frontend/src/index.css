@@ -73,15 +73,7 @@ main {
   cursor: pointer;
 }
 
-.sendForm {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 173px;
-  margin-top: 20px;
-}
-
-.loginForm {
+.forms {
   display: flex;
   flex-direction: column;
   gap: 10px;
