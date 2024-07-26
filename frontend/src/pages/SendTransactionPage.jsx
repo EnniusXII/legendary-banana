@@ -3,7 +3,7 @@ import { mineBlock, sendTransaction } from '../services/HttpClient';
 
 export const SendTransactionPage = () => {
     const [recipient, setRecipient] = useState("");
-    const [amount, setAmount] = useState("");
+    const [amount, setAmount] = useState(0);
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -41,9 +41,9 @@ export const SendTransactionPage = () => {
             />
             <label>Amount:</label>
             <input
-              type="text"
+              type="number"
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={(e) => setAmount(parseInt(e.target.value))}
             />
           <button type="submit">Add Transaction</button>
           <button type="button" onClick={handleMineBlock}>
