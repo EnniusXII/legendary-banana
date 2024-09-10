@@ -1,1 +1,1 @@
-# legendary-banana
+# legendary-banana - Final assignment in NodeJS course.
